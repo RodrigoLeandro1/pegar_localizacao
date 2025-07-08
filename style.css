@@ -1,0 +1,151 @@
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: #f0f1f2;
+  margin: 0;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.receipt-wrapper {
+  position: relative; /* Necessário para posicionar a mensagem de aviso sobre o conteúdo */
+  width: 100%;
+  max-width: 450px;
+}
+
+.receipt-container {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  transition: filter 0.5s ease-in-out; /* Animação suave para o blur */
+}
+
+/* CLASSE QUE APLICA O BLUR */
+.content-blurred {
+  filter: blur(8px);
+  pointer-events: none; /* Impede que o usuário clique no conteúdo borrado */
+  user-select: none;
+}
+
+/* MENSAGEM QUE APARECE SE A PERMISSÃO FOR NEGADA */
+.permission-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(2px);
+  display: none; /* Começa escondida */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  z-index: 10;
+  padding: 20px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Estilos do comprovante (sem alterações) */
+.header-logo {
+  padding: 16px 24px;
+  text-align: left;
+  border-bottom: 1px solid #f0f1f2;
+}
+
+.picpay-logo-text {
+  font-size: 26px;
+  font-weight: 700;
+  color: #11C76F;
+  letter-spacing: -0.5px;
+}
+
+.main-content {
+  padding: 24px;
+}
+
+.receipt-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: #000;
+  text-align: center;
+  margin: 0;
+  padding-bottom: 16px;
+}
+
+.timestamp {
+  text-align: center;
+  color: #707070;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 24px;
+}
+
+.section {
+  border-bottom: 1px solid #f0f1f2;
+  padding-bottom: 16px;
+  margin-bottom: 16px;
+}
+
+.main-content > .section:last-of-type {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.section-title {
+  font-size: 15px;
+  color: #000;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.section-content,
+.section-content p {
+  font-size: 14px;
+  color: #707070;
+  font-weight: 500;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.main-info {
+  font-size: 16px;
+  font-weight: 600;
+  color: #000;
+}
+
+.value-section .amount {
+  font-size: 32px;
+  font-weight: 700;
+  color: #11C76F;
+  text-align: left;
+  margin-top: 4px;
+}
+
+.transaction-id {
+  word-wrap: break-word;
+}
+
+.footer {
+  background-color: #f8f9fa;
+  color: #707070;
+  font-size: 12px;
+  padding: 20px 24px;
+  text-align: center;
+  line-height: 1.6;
+}
+
+.footer p {
+  margin: 4px 0;
+}
+
+.footer .picpay-cnpj {
+  font-weight: 600;
+  color: #000;
+}
