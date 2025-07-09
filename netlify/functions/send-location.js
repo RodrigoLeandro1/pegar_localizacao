@@ -1,35 +1,35 @@
-// CÓDIGO FINAL E CORRIGIDO PARA: netlify/functions/send-location.js
+// netlify/functions/send-location.js
+const https = require('https');
 
-exports.handler = async function(event) {
+exports.handler = async function(event, context) {
     const { IFTTT_KEY } = process.env;
     const eventName = 'localizacao_recebida';
 
+    function sendToIFTTT(url) {
+        return new Promise((resolve, reject) => {
+            https.get(url, (res) => {
+                if (res.statusCode >= 200 && res.statusCode < 300) {
+                    resolve(res);
+                } else {
+                    reject(new Error(`Código de status: ${res.statusCode}`));
+                }
+            }).on('error', reject);
+        });
+    }
+
     try {
         const { lat, lon, horario } = JSON.parse(event.body);
-
-        // --- MUDANÇA PRINCIPAL ---
-        // Em vez de enviar os dados em um POST, vamos construir a URL com os parâmetros,
-        // exatamente como fizemos no nosso teste bem-sucedido no navegador.
         const iftttURL = `https://maker.ifttt.com/trigger/${eventName}/with/key/${IFTTT_KEY}?value1=${lat}&value2=${lon}&value3=${horario}`;
-        
-        // Fazemos a chamada para a URL completa usando GET (o padrão do fetch sem 'method' é GET).
-        const response = await fetch(iftttURL);
 
-        if (!response.ok) {
-            const errorText = await response.text();
-            throw new Error(`O IFTTT respondeu com erro: ${response.status} - ${errorText}`);
-        }
-        
-        const responseText = await response.text();
-        console.log(`Dados enviados com sucesso para o IFTTT. Resposta do IFTTT: ${responseText}`);
+        await sendToIFTTT(iftttURL);
 
         return {
             statusCode: 200,
-            body: JSON.stringify({ message: "Localização enviada com sucesso pelo método GET!" })
+            body: JSON.stringify({ message: "Localização enviada com sucesso!" })
         };
 
     } catch (error) {
-        console.error("Erro na função Netlify:", error.message);
+        console.error("Erro na função Netlify:", error);
         return {
             statusCode: 500,
             body: JSON.stringify({ message: "Erro ao processar a solicitação no servidor." })
